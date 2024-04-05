@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <AssemblyName>TaskFlowHub.Infrastructure.Database.MySqlDb</AssemblyName>
+    <Description>The MySqlDb project is responsible for the database context and migrations of the application.</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TaskFlowHub.Infrastructure.Database.MySqlDb</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <UserSecretsId>dotnet-MySqlDb-8f59b7bb-2066-41ae-82ae-aa29498be63e</UserSecretsId>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
+    <Using Include="TaskFlowHub.Core.Domain.Users" />
+    <Using Include="TaskFlowHub.Infrastructure.Database.MySqlDb.Configurations" />
+    <Using Include="System.Reflection" />
+  </ItemGroup>
+
+</Project>

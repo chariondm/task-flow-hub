@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.3
+    container_name: local_mysql_db
+    hostname: task_flow_hub_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme_root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-task_flow_hub_db}
+      MYSQL_USER: ${MYSQL_USER:-task_flow_hub_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme_user}
+    ports:
+      - "3306:3306"
+    volumes:
+      - task_flow_hub_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: local_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: task_flow_hub_mysql_db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme_root}
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  task_flow_hub_mysql_data:
+
+networks:
+  task_flow_hub_network:
+    driver: bridge

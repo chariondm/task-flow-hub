@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter</AssemblyName>
+    <Description>The MySqlDbAdapter project is responsible for the implementation of the outbound ports of the application using the MySQL database.</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="MySql.Data" Version="8.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Application\Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Dapper" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="Microsoft.Extensions.Logging" />
+    <Using Include="MySql.Data.MySqlClient" />
+    <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Infrastructure.ConnectionFactory" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Outbounds" />
+    <Using Include="TaskFlowHub.Core.Domain.Users" />
+    <Using Include="System.Data" />
+  </ItemGroup>
+
+</Project>

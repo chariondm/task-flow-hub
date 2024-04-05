@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AssemblyName>TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi</AssemblyName>
+    <Description>The TaskFlowHubHttpApi project is responsible for the implementation of the inbound ports of the application using the HTTP protocol to manage the user registrations, tasks, and task assignments.</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="Microsoft.OpenApi.Models" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser" />
+    <Using Include="System.Reflection" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Application\Application.csproj" />
+    <ProjectReference Include="..\..\Outbounds\MySqlDbAdapter\MySqlDbAdapter.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>TaskFlowHub.Core.Domain</AssemblyName>
+    <Description>The Domain project is responsible for the domain entities and business rules of the application.</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TaskFlowHub.Core.Domain</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+@TaskFlowHubHttpApi_HostAddress = http://localhost:5126
+
+###
+### Create a new user
+POST {{TaskFlowHubHttpApi_HostAddress}}/api/v1/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "{{$guid}}",
+  "password": "{{$guid}}",
+  "email": "mail_{{$guid}}@mail.com"
+}
+
+###
