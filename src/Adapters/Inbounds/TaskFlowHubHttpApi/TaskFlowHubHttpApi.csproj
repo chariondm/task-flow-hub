@@ -20,14 +20,19 @@
   <ItemGroup>
     <Using Include="Microsoft.AspNetCore.Mvc" />
     <Using Include="Microsoft.OpenApi.Models" />
+    <Using Include="TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Modules.Common" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin" />
+    <Using Include="TaskFlowHub.Infrastructure.Security" />
     <Using Include="System.Reflection" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Application\Application.csproj" />
     <ProjectReference Include="..\..\Outbounds\MySqlDbAdapter\MySqlDbAdapter.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\Security\Security.csproj" />
   </ItemGroup>
 
 </Project>

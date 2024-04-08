@@ -9,10 +9,36 @@ namespace TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Users;
 /// This class is responsible for handling the user data in the mysql database.
 /// </remarks>
 public class UserRepository(IDbConnectionFactory dbConnectionFactory, ILogger<UserRepository> logger)
-    : IRegisterNonAdminUserUseRepository
+    : IRegisterNonAdminUserUseRepository, IUserLoginRepository
 {
     private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
     private readonly ILogger<UserRepository> _logger = logger;
+
+    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogDebug("Getting a user by username.");
+
+            var parameters = new { Username = username };
+
+            var sql = @"
+                SELECT user_id AS Id, username AS Username, email AS Email, password AS Password, is_admin AS IsAdmin
+                FROM user
+                WHERE username = @Username";
+
+            var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+
+            using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+            return await connection.QueryFirstOrDefaultAsync<User>(command);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while getting a user by username.");
+            throw;
+        }
+    }
 
     public async Task<bool> IsUsernameOrEmailRegisteredAsync(string username, string email, CancellationToken cancellationToken)
     {
@@ -93,6 +119,32 @@ public class UserRepository(IDbConnectionFactory dbConnectionFactory, ILogger<Us
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while registering a new user.");
+            throw;
+        }
+    }
+
+    public async Task<int> UpdateLastLoginDateAsync(Guid userId, DateTime lastLoginDate, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogDebug("Updating the last login date.");
+
+            var parameters = new { UserId = userId, LastLoginDate = lastLoginDate };
+
+            var sql = @"
+                UPDATE user
+                SET updated_at = @LastLoginDate
+                WHERE user_id = @UserId";
+
+            var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+
+            using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+            return await connection.ExecuteAsync(command);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while updating the last login date.");
             throw;
         }
     }

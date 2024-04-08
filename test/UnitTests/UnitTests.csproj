@@ -47,6 +47,9 @@
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin.Outbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin" />
     <Using Include="TaskFlowHub.Core.Domain.Users" />
     <Using Include="Xunit" />
   </ItemGroup>

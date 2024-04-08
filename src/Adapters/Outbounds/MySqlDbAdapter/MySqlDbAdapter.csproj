@@ -28,6 +28,7 @@
     <Using Include="MySql.Data.MySqlClient" />
     <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Infrastructure.ConnectionFactory" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Outbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin.Outbounds" />
     <Using Include="TaskFlowHub.Core.Domain.Users" />
     <Using Include="System.Data" />
   </ItemGroup>
