@@ -13,3 +13,14 @@ Content-Type: application/json
 }
 
 ###
+
+### Login
+POST {{TaskFlowHubHttpApi_HostAddress}}/api/v1/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "{{$guid}}",
+  "password": "{{$guid}}"
+}
+

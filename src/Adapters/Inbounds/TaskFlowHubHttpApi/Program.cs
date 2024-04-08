@@ -26,7 +26,11 @@ builder.Services
     .AddUserRepositoryDbAdapter();
 
 builder.Services
-    .AddRegisterNonAdminUserUseCase();
+    .AddJwtTokenGeneration(builder.Configuration);
+
+builder.Services
+    .AddRegisterNonAdminUserUseCase()
+    .AddLoginUserUseCase();
 
 var app = builder.Build();
 

@@ -4,6 +4,8 @@ public static class UserRepositoryDbAdapterSetup
 {
     public static void AddUserRepositoryDbAdapter(this IServiceCollection services)
     {
-        services.AddScoped<IRegisterNonAdminUserUseRepository, UserRepository>();
+        services
+            .AddScoped<IRegisterNonAdminUserUseRepository, UserRepository>()
+            .AddScoped<IUserLoginRepository, UserRepository>();
     }
 }

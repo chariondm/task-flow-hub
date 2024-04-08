@@ -1,5 +1,3 @@
-using TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Modules.Common;
-
 namespace TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Controllers.RegisterNonAdminUsers.V1;
 /// <summary>
 /// Controller for the user registration endpoint.
