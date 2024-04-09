@@ -15,6 +15,7 @@ builder.Services.AddCustomSwagger();
 
 builder.Services
     .AddDbConnectionFactory(builder.Configuration.GetConnectionString("DefaultConnection")!)
+    .AddTaskRepositoryDbAdapter()
     .AddUserRepositoryDbAdapter();
 
 builder.Services
@@ -26,6 +27,7 @@ builder.Services
 builder.Services
     .AddAdminListUsersUseCase()
     .AddRegisterNonAdminUserUseCase()
+    .AddRegisterTaskUseCase()
     .AddLoginUserUseCase();
 
 var app = builder.Build();

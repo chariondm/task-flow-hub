@@ -8,7 +8,7 @@ public class DatabaseFixture : IAsyncLifetime
 {
     public AppDbContext? DbContext { get; private set; }
     public IDbConnectionFactory? DbConnectionFactory { get; private set; }
-    public readonly CancellationTokenSource _cts = new();
+    public readonly CancellationTokenSource Cts = new();
 
     public async Task InitializeAsync()
     {
@@ -25,12 +25,12 @@ public class DatabaseFixture : IAsyncLifetime
         DbContext = new AppDbContext(options);
         DbConnectionFactory = new DbConnectionFactory(connectionString);
 
-        await DbContext.Database.EnsureCreatedAsync(_cts.Token);
+        await DbContext.Database.EnsureCreatedAsync(Cts.Token);
     }
 
     public async Task DisposeAsync()
     {
-        await DbContext!.Database.EnsureDeletedAsync(_cts.Token);
+        await DbContext!.Database.EnsureDeletedAsync(Cts.Token);
         await DbContext.DisposeAsync();
     }
 }

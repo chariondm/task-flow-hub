@@ -24,8 +24,11 @@
     <Using Include="TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Modules.Common.Infrastructure.Authentication" />
     <Using Include="TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Modules.Common.Swagger" />
     <Using Include="TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Modules.Common" />
+    <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Tasks" />
     <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Users" />
     <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Infrastructure.ConnectionFactory" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Inbounds" />

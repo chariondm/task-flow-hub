@@ -45,7 +45,9 @@
     <Using Include="FluentAssertions" />
     <Using Include="Microsoft.EntityFrameworkCore" />
     <Using Include="Microsoft.Extensions.Logging" />
+    <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Tasks" />
     <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Users" />
+    <Using Include="TaskFlowHub.Core.Domain.FlowTasks" />
     <Using Include="TaskFlowHub.Core.Domain.Users" />
     <Using Include="TaskFlowHub.Infrastructure.Database.MySqlDb.Configurations" />
     <Using Include="TaskFlowHub.IntegrationTests.MySqlDbAdapterTests.Helpers" />
