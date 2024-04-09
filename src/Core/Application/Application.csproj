@@ -26,6 +26,8 @@
     <Using Include="FluentValidation" />
     <Using Include="FluentValidation.Results" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin.Inbounds" />

@@ -1,11 +1,3 @@
-using System.Text.Json.Serialization;
-
-using TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Modules.Common.Swagger;
-
-using TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Users;
-
-using TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Infrastructure.ConnectionFactory;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -26,13 +18,20 @@ builder.Services
     .AddUserRepositoryDbAdapter();
 
 builder.Services
-    .AddJwtTokenGeneration(builder.Configuration);
+    .AddJwtTokenGeneration(builder.Configuration)
+    .AddJwtTokenAuthentication(builder.Configuration)
+    .AddHttpContextAccessor()
+    .AddScoped<IUserContextAccessor, UserContextAccessor>();
 
 builder.Services
+    .AddAdminListUsersUseCase()
     .AddRegisterNonAdminUserUseCase()
     .AddLoginUserUseCase();
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseCustomSwagger(app.Environment);
 
