@@ -27,8 +27,11 @@ public class JwtTokenGenerator(
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.UniqueName, user.Username),
             new(JwtRegisteredClaimNames.Email, user.Email),
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
+            GetRoleClaimBasedOnUser(user)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtTokenSettings.Secret));
@@ -52,5 +55,10 @@ public class JwtTokenGenerator(
         _logger.LogInformation("Token generated for user {UserId}.", user.Id);
 
         return token;
+    }
+
+    private static Claim GetRoleClaimBasedOnUser(User user)
+    {
+        return user.IsAdmin ? new Claim(ClaimTypes.Role, "admin") : new Claim(ClaimTypes.Role, "user");
     }
 }

@@ -23,6 +23,45 @@ public class UserRepositoryTest : IClassFixture<DatabaseFixture>
         _cts = fixture._cts;
     }
 
+    [Fact(DisplayName = "IsUserAnAdministratorAsync Should Return True When User Is An Administrator")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "User")]
+    [Trait("Description", "Ensure that the 'IsUserAnAdministratorAsync' method returns true when the user is an administrator.")]
+    public async Task IsUserAnAdministratorAsync_ShouldReturnTrue_WhenUserIsAnAdministrator()
+    {
+        // Arrange
+        var user = new User(
+            _faker.Random.Guid(),
+            _faker.Internet.UserName(),
+            _faker.Internet.Email(),
+            _faker.Internet.Password(),
+            true);
+
+        await _sut.RegisterUserAsync(user, _cts!.Token);
+
+        // Act
+        var result = await _sut.IsUserAnAdministratorAsync(user.Id, _cts!.Token);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Fact(DisplayName = "IsUserAnAdministratorAsync Should Return Throw Exception When An Error Occurs")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "User")]
+    [Trait("Description", "Ensure that the 'IsUserAnAdministratorAsync' method throws an exception when an error occurs.")]
+    public async Task IsUserAnAdministratorAsync_ShouldThrowException_WhenAnErrorOccurs()
+    {
+        // Arrange
+        _sut.GetType().GetField("_dbConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(_sut, null);
+
+        // Act
+        Func<Task> act = async () => await _sut.IsUserAnAdministratorAsync(_faker.Random.Guid(), _cts!.Token);
+
+        // Assert
+        await act.Should().ThrowAsync<Exception>();
+    }
+
     [Fact(DisplayName = "IsUsernameOrEmailRegisteredAsync Should Return False When Username Or Email Is Not Registered")]
     [Trait("Category", "Integration Test")]
     [Trait("Entity", "User")]
@@ -100,6 +139,53 @@ public class UserRepositoryTest : IClassFixture<DatabaseFixture>
 
         // Assert
         result.Should().Be(1);
+    }
+
+    [Fact(DisplayName = "ListUsersAsync Should Return Users When Users Are Listed")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "User")]
+    [Trait("Description", "Ensure that the 'ListUsersAsync' method returns the users when the users are listed.")]
+    public async Task ListUsersAsync_ShouldReturnUsers_WhenUsersAreListed()
+    {
+        // Arrange
+        var user1 = new User(
+            _faker.Random.Guid(),
+            _faker.Internet.UserName(),
+            _faker.Internet.Email(),
+            _faker.Internet.Password());
+
+        var user2 = new User(
+            _faker.Random.Guid(),
+            _faker.Internet.UserName(),
+            _faker.Internet.Email(),
+            _faker.Internet.Password());
+
+        await _sut.RegisterNonAdminUserAsync(user1, _cts!.Token);
+        await _sut.RegisterNonAdminUserAsync(user2, _cts!.Token);
+
+        // Act
+        var result = await _sut.ListUsersAsync(_cts!.Token);
+
+        // Assert
+        result.Should().NotBeNullOrEmpty();
+        result.Should().ContainEquivalentOf(user1);
+        result.Should().ContainEquivalentOf(user2);
+    }
+
+    [Fact(DisplayName = "ListUsersAsync Should Return Throw Exception When An Error Occurs")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "User")]
+    [Trait("Description", "Ensure that the 'ListUsersAsync' method throws an exception when an error occurs.")]
+    public async Task ListUsersAsync_ShouldThrowException_WhenAnErrorOccurs()
+    {
+        // Arrange
+        _sut.GetType().GetField("_dbConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(_sut, null);
+
+        // Act
+        Func<Task> act = async () => await _sut.ListUsersAsync(_cts!.Token);
+
+        // Assert
+        await act.Should().ThrowAsync<Exception>();
     }
 
     [Fact(DisplayName = "RegisterNonAdminUserAsync Should Return 0 When User With Same Username Is Already Registered")]

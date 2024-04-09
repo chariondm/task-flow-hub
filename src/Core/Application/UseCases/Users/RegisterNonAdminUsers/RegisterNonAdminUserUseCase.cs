@@ -16,7 +16,7 @@ public class RegisterNonAdminUserUseCase(IValidator<RegisterNonAdminUserInbound>
 
         if (!validationResult.IsValid)
         {
-            _outcomeHandler?.InvalidData(validationResult.ToDictionary());
+            _outcomeHandler!.InvalidData(validationResult.ToDictionary());
             return;
         }
 
@@ -25,7 +25,7 @@ public class RegisterNonAdminUserUseCase(IValidator<RegisterNonAdminUserInbound>
 
         if (userExists)
         {
-            _outcomeHandler?.UserAlreadyRegistered();
+            _outcomeHandler!.UserAlreadyRegistered();
             return;
         }
 
@@ -35,11 +35,11 @@ public class RegisterNonAdminUserUseCase(IValidator<RegisterNonAdminUserInbound>
 
         if (affectedRows == 0)
         {
-            _outcomeHandler?.UserAlreadyRegistered();
+            _outcomeHandler!.UserAlreadyRegistered();
             return;
         }
 
-        _outcomeHandler?.NonAdminUserRegistered(user.Id);
+        _outcomeHandler!.NonAdminUserRegistered(user.Id);
     }
 
     public void SetOutcomeHandler(IRegisterNonAdminUserOutcomeHandler outcomeHandler)
