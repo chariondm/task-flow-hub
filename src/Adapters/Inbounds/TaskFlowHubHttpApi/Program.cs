@@ -28,6 +28,7 @@ builder.Services
     .AddAdminListUsersUseCase()
     .AddRegisterNonAdminUserUseCase()
     .AddRegisterTaskUseCase()
+    .AddRetrieveTaskUseCase()
     .AddLoginUserUseCase();
 
 var app = builder.Build();

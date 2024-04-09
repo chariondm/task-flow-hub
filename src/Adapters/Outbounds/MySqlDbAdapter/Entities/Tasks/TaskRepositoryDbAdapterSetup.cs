@@ -4,7 +4,9 @@ public static class TaskRepositoryDbAdapterSetup
 {
     public static IServiceCollection AddTaskRepositoryDbAdapter(this IServiceCollection services)
     {
-        services.AddScoped<IRegisterTaskRepository, TaskRepository>();
+        services
+            .AddScoped<IRetrieveTaskRepository, TaskRepository>()
+            .AddScoped<IRegisterTaskRepository, TaskRepository>();
 
         return services;
     }

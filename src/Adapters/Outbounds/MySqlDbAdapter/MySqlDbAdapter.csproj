@@ -27,6 +27,7 @@
     <Using Include="Microsoft.Extensions.Logging" />
     <Using Include="MySql.Data.MySqlClient" />
     <Using Include="TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Infrastructure.ConnectionFactory" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Outbounds" />
