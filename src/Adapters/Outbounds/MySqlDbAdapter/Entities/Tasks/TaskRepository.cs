@@ -1,7 +1,7 @@
 namespace TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Tasks;
 
 public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<TaskRepository> logger)
-    : IRegisterTaskRepository
+    : IRetrieveTaskRepository, IRegisterTaskRepository
 {
     private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
     private readonly ILogger<TaskRepository> _logger = logger;
@@ -36,6 +36,32 @@ public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<Ta
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while registering a task.");
+            throw;
+        }
+    }
+
+    public async Task<FlowTask?> RetrieveTaskAsync(Guid taskId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogDebug("Retrieving a task.");
+
+            var parameters = new { TaskId = taskId };
+
+            var sql = @"
+                SELECT task_id AS Id, user_id AS UserId, title AS Title, description AS Description, status AS Status, created_at AS CreationDate
+                FROM task
+                WHERE task_id = @TaskId";
+
+            var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+
+            using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+            return await connection.QueryFirstOrDefaultAsync<FlowTask>(command);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while retrieving a task.");
             throw;
         }
     }

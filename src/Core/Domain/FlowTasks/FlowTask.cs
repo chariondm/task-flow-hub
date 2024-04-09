@@ -19,4 +19,11 @@ public record FlowTask(
     string Title,
     string Description,
     FlowTaskStatus Status,
-    DateTime CreationDate);
+    DateTime CreationDate)
+
+{
+    public FlowTask()
+        : this(Guid.Empty, Guid.Empty, string.Empty, string.Empty, FlowTaskStatus.Created, DateTime.MinValue)
+    {
+    }
+};
