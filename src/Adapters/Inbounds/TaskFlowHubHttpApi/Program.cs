@@ -26,6 +26,7 @@ builder.Services
 
 builder.Services
     .AddAdminListUsersUseCase()
+    .AddListTaskUseCase()
     .AddRegisterNonAdminUserUseCase()
     .AddRegisterTaskUseCase()
     .AddRetrieveTaskUseCase()

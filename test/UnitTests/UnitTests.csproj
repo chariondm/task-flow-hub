@@ -44,6 +44,9 @@
     <Using Include="FluentValidation" />
     <Using Include="FluentValidation.Results" />
     <Using Include="Moq" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.ListTasks.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.ListTasks.Outbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.ListTasks" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks" />

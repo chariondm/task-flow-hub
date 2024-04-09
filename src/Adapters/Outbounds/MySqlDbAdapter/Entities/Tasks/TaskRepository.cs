@@ -1,7 +1,7 @@
 namespace TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Tasks;
 
 public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<TaskRepository> logger)
-    : IRetrieveTaskRepository, IRegisterTaskRepository
+    : IListTaskRepository, IRetrieveTaskRepository, IRegisterTaskRepository
 {
     private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
     private readonly ILogger<TaskRepository> _logger = logger;
@@ -40,6 +40,30 @@ public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<Ta
         }
     }
 
+    public async Task<IEnumerable<FlowTask>> RetrieveAllTasksAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogDebug("Retrieving all tasks.");
+
+            var sql = @"
+                SELECT task_id AS Id, user_id AS UserId, title AS Title, description AS Description, status AS Status, created_at AS CreationDate
+                FROM task
+                ORDER BY user_id, created_at DESC";
+
+            var command = new CommandDefinition(sql, cancellationToken: cancellationToken);
+
+            using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+            return await connection.QueryAsync<FlowTask>(command);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while retrieving all tasks.");
+            throw;
+        }
+    }
+
     public async Task<FlowTask?> RetrieveTaskAsync(Guid taskId, CancellationToken cancellationToken)
     {
         try
@@ -62,6 +86,33 @@ public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<Ta
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while retrieving a task.");
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<FlowTask>> RetrieveTasksAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogDebug("Retrieving tasks.");
+
+            var parameters = new { UserId = userId };
+
+            var sql = @"
+                SELECT task_id AS Id, user_id AS UserId, title AS Title, description AS Description, status AS Status, created_at AS CreationDate
+                FROM task
+                WHERE user_id = @UserId
+                ORDER BY created_at DESC";
+
+            var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+
+            using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+            return await connection.QueryAsync<FlowTask>(command);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while retrieving tasks.");
             throw;
         }
     }

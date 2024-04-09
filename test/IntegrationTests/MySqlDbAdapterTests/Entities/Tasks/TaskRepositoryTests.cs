@@ -57,16 +57,44 @@ public class TaskRepositoryTests : IClassFixture<DatabaseFixture>
     public async Task RegisterTaskAsync_ShouldThrowExceptionWhenTaskRegistrationFails()
     {
         // Arrange
-        var task = new FlowTask(
-            _faker.Random.Guid(),
-            _faker.Random.Guid(),
-            _faker.Lorem.Sentence().ClampLength(10, 100, '.'),
-            _faker.Lorem.Paragraph().ClampLength(10, 1000, '.'),
-            FlowTaskStatus.Created,
-            DateTime.UtcNow);
+        var task = await CreateAndRegisterTaskAsync(await CreateAndRegisterUserAsync());
 
         // Act
         Func<Task> act = async () => await _sut.RegisterTaskAsync(task, _cts!.Token);
+
+        // Assert
+        await act.Should().ThrowAsync<Exception>();
+    }
+
+    [Fact(DisplayName = "RetrieveAllTasksAsync Should Retrieve All Tasks Successfully")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "Task")]
+    [Trait("Description", "Ensure that the 'RetrieveAllTasksAsync' method retrieves all tasks successfully.")]
+    public async Task RetrieveAllTasksAsync_ShouldRetrieveAllTasksSuccessfully()
+    {
+        // Arrange
+        var user = await CreateAndRegisterUserAsync();
+        await CreateAndRegisterTaskAsync(user);
+
+        // Act
+        var result = await _sut.RetrieveAllTasksAsync(_cts!.Token);
+
+        // Assert
+        result.Should().NotBeEmpty();
+    }
+
+    [Fact(DisplayName = "RetrieveAllTasksAsync Should Throw Exception When Task Retrieval Fails")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "Task")]
+    [Trait("Description", "Ensure that the 'RetrieveAllTasksAsync' method throws an exception when task retrieval fails.")]
+    public async Task RetrieveAllTasksAsync_ShouldThrowExceptionWhenTaskRetrievalFails()
+    {
+        // Arrange
+        _sut.GetType().GetField("_dbConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance)!
+            .SetValue(_sut, null);
+
+        // Act
+        Func<Task> act = async () => await _sut.RetrieveAllTasksAsync(_cts!.Token);
 
         // Assert
         await act.Should().ThrowAsync<Exception>();
@@ -133,6 +161,42 @@ public class TaskRepositoryTests : IClassFixture<DatabaseFixture>
         await act.Should().ThrowAsync<Exception>();
     }
 
+    [Fact(DisplayName = "RetrieveTasksAsync Should Retrieve Tasks Successfully")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "Task")]
+    [Trait("Description", "Ensure that the 'RetrieveTasksAsync' method retrieves tasks successfully.")]
+    public async Task RetrieveTasksAsync_ShouldRetrieveTasksSuccessfully()
+    {
+        // Arrange
+        var user = await CreateAndRegisterUserAsync();
+        await CreateAndRegisterTaskAsync(user);
+
+        // Act
+        var result = await _sut.RetrieveTasksAsync(user.Id, _cts!.Token);
+
+        // Assert
+        result.Should().NotBeEmpty();
+    }
+
+    [Fact(DisplayName = "RetrieveTasksAsync Should Throw Exception When Task Retrieval Fails")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "Task")]
+    [Trait("Description", "Ensure that the 'RetrieveTasksAsync' method throws an exception when task retrieval fails.")]
+    public async Task RetrieveTasksAsync_ShouldThrowExceptionWhenTaskRetrievalFails()
+    {
+        // Arrange
+        var userId = _faker.Random.Guid();
+
+        _sut.GetType().GetField("_dbConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance)!
+            .SetValue(_sut, null);
+
+        // Act
+        Func<Task> act = async () => await _sut.RetrieveTasksAsync(userId, _cts!.Token);
+
+        // Assert
+        await act.Should().ThrowAsync<Exception>();
+    }
+
     private async Task<User> CreateAndRegisterUserAsync()
     {
         // Arrange
@@ -146,5 +210,20 @@ public class TaskRepositoryTests : IClassFixture<DatabaseFixture>
         await _userRepository.RegisterUserAsync(user, _cts!.Token);
 
         return user;
+    }
+
+    private async Task<FlowTask> CreateAndRegisterTaskAsync(User user)
+    {
+        var task = new FlowTask(
+            _faker.Random.Guid(),
+            user.Id,
+            _faker.Lorem.Sentence().ClampLength(10, 100, '.'),
+            _faker.Lorem.Paragraph().ClampLength(10, 1000, '.'),
+            FlowTaskStatus.Created,
+            DateTime.UtcNow);
+
+        await _sut.RegisterTaskAsync(task, _cts!.Token);
+
+        return task;
     }
 }
