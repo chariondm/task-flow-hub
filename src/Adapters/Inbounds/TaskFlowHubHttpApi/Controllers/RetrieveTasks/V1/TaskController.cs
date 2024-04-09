@@ -1,5 +1,3 @@
-using TaskFlowHub.Core.Domain.FlowTasks;
-
 namespace TaskFlowHub.Adapters.Inbounds.TaskFlowHubHttpApi.Controllers.RetrieveTasks.V1;
 
 /// <summary>
