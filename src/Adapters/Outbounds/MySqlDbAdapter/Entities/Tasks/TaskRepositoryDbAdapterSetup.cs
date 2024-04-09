@@ -7,7 +7,8 @@ public static class TaskRepositoryDbAdapterSetup
         services
             .AddScoped<IListTaskRepository, TaskRepository>()
             .AddScoped<IRetrieveTaskRepository, TaskRepository>()
-            .AddScoped<IRegisterTaskRepository, TaskRepository>();
+            .AddScoped<IRegisterTaskRepository, TaskRepository>()
+            .AddScoped<IUpdateTaskRepository, TaskRepository>();
 
         return services;
     }

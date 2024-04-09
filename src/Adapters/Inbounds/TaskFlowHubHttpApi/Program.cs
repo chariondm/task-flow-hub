@@ -30,6 +30,7 @@ builder.Services
     .AddRegisterNonAdminUserUseCase()
     .AddRegisterTaskUseCase()
     .AddRetrieveTaskUseCase()
+    .AddUpdateTaskUseCase()
     .AddLoginUserUseCase();
 
 var app = builder.Build();

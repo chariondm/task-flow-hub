@@ -33,6 +33,8 @@
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.UpdateTasks.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.UpdateTasks" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Inbounds" />

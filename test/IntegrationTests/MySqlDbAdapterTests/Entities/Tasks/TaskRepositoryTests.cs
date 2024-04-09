@@ -197,6 +197,58 @@ public class TaskRepositoryTests : IClassFixture<DatabaseFixture>
         await act.Should().ThrowAsync<Exception>();
     }
 
+    [Fact(DisplayName = "UpdateTaskAsync Should Update Task Successfully")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "Task")]
+    [Trait("Description", "Ensure that the 'UpdateTaskAsync' method updates a task successfully.")]
+    public async Task UpdateTaskAsync_ShouldUpdateTaskSuccessfully()
+    {
+        // Arrange
+        var user = await CreateAndRegisterUserAsync();
+        var task = await CreateAndRegisterTaskAsync(user);
+
+        var updatedTask = new FlowTask(
+            task.Id,
+            user.Id,
+            _faker.Lorem.Sentence().ClampLength(10, 100, '.'),
+            _faker.Lorem.Paragraph().ClampLength(10, 1000, '.'),
+            _faker.PickRandom<FlowTaskStatus>(),
+            DateTime.UtcNow);
+
+        // Act
+        var result = await _sut.UpdateTaskAsync(updatedTask, _cts!.Token);
+
+        // Assert
+        result.Should().Be(1);
+    }
+
+    [Fact(DisplayName = "UpdateTaskAsync Should Throw Exception When Task Update Fails")]
+    [Trait("Category", "Integration Test")]
+    [Trait("Entity", "Task")]
+    [Trait("Description", "Ensure that the 'UpdateTaskAsync' method throws an exception when task update fails.")]
+    public async Task UpdateTaskAsync_ShouldThrowExceptionWhenTaskUpdateFails()
+    {
+        // Arrange
+        var user = await CreateAndRegisterUserAsync();
+        var task = await CreateAndRegisterTaskAsync(user);
+
+        var tooLongTitle = _faker.Lorem.Sentence().ClampLength(101);
+
+        var updatedTask = new FlowTask(
+            task.Id,
+            user.Id,
+            tooLongTitle,
+            _faker.Lorem.Paragraph(),
+            _faker.PickRandom<FlowTaskStatus>(),
+            DateTime.UtcNow);
+
+        // Act
+        Func<Task> act = async () => await _sut.UpdateTaskAsync(updatedTask, _cts!.Token);
+
+        // Assert
+        await act.Should().ThrowAsync<Exception>();
+    }
+
     private async Task<User> CreateAndRegisterUserAsync()
     {
         // Arrange

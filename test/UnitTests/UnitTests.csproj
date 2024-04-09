@@ -53,6 +53,9 @@
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.UpdateTasks.Inbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.UpdateTasks.Outbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.UpdateTasks" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Inbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers" />

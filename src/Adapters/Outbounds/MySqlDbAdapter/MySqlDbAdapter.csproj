@@ -30,6 +30,7 @@
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.ListTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RetrieveTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.RegisterTasks.Outbounds" />
+    <Using Include="TaskFlowHub.Core.Application.UseCases.Tasks.UpdateTasks.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.AdminListUsers.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.RegisterNonAdminUser.Outbounds" />
     <Using Include="TaskFlowHub.Core.Application.UseCases.Users.UserLogin.Outbounds" />
