@@ -20,7 +20,7 @@ public class UserRepositoryTest : IClassFixture<DatabaseFixture>
 
         _sut = new UserRepository(fixture.DbConnectionFactory!, logger);
 
-        _cts = fixture._cts;
+        _cts = fixture.Cts;
     }
 
     [Fact(DisplayName = "IsUserAnAdministratorAsync Should Return True When User Is An Administrator")]

@@ -29,6 +29,7 @@
   <ItemGroup>
     <Using Include="Microsoft.EntityFrameworkCore" />
     <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
+    <Using Include="TaskFlowHub.Core.Domain.FlowTasks" />
     <Using Include="TaskFlowHub.Core.Domain.Users" />
     <Using Include="TaskFlowHub.Infrastructure.Database.MySqlDb.Configurations" />
     <Using Include="System.Reflection" />
