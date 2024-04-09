@@ -1,7 +1,7 @@
 namespace TaskFlowHub.Adapters.Outbounds.MySqlDbAdapter.Entities.Tasks;
 
 public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<TaskRepository> logger)
-    : IListTaskRepository, IRetrieveTaskRepository, IRegisterTaskRepository
+    : IListTaskRepository, IRetrieveTaskRepository, IRegisterTaskRepository, IUpdateTaskRepository
 {
     private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
     private readonly ILogger<TaskRepository> _logger = logger;
@@ -113,6 +113,40 @@ public class TaskRepository(IDbConnectionFactory dbConnectionFactory, ILogger<Ta
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while retrieving tasks.");
+            throw;
+        }
+    }
+
+    public async Task<int> UpdateTaskAsync(FlowTask task, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogDebug("Updating a task.");
+
+            var parameters = new
+            {
+                TaskId = task.Id,
+                task.UserId,
+                task.Title,
+                task.Description,
+                Status = task.Status.ToString(),
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            var sql = @"
+                UPDATE task
+                SET title = @Title, description = @Description, status = @Status, updated_at = @UpdatedAt
+                WHERE task_id = @TaskId AND user_id = @UserId";
+
+            var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+
+            using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+            return await connection.ExecuteAsync(command);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while updating a task.");
             throw;
         }
     }
