@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-<detalis>
+<details>
     <summary>Table of Contents</summary>
     <ul>
         <li><a href="#task-flow-hub">Task Flow Hub</a></li>
@@ -9,7 +9,7 @@
         <li><a href="#getting-started">Getting Started</a></li>
         <li><a href="#configuration">Configuration</a></li>
     </ul>
-</detalis>
+</details>
 
 # Task Flow Hub
 
